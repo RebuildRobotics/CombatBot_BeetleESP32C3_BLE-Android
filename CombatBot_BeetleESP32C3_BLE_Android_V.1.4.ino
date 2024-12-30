@@ -438,13 +438,6 @@ class MyCallbacks : public BLECharacteristicCallbacks {
         // Constrain
         throttleLeft = constrain(throttleLeft, -100, 100);
         throttleRight = constrain(throttleRight, -100, 100);
-        // Backwards turning direction fix // Originally inverted turning direction is "fixed" by changing motor speeds between left and right motors // Normally inverted like in original script: https://youtu.be/Bx0y1qyLHQ4?si=SiRo3NRRyVRyjbs3
-        if (CHMIX && ch1 > 0) { // If your controllers fwd is negative not positive this should be: ch1 < 0
-          int tempL = throttleLeft;
-          int tempR = throttleRight;
-          throttleLeft = tempR;
-          throttleRight = tempL;
-        }
         // Trim
         throttleLeft = round(throttleLeft * ((float)TRIM_L / 100));
         throttleRight = round(throttleRight * ((float)TRIM_R / 100));
