@@ -63,15 +63,18 @@ String version = "1.4";
   *****
   HOW TO INSTALL:
   *****
-  1. Read instructions.
-  2. Install Arduino IDE from https://www.arduino.cc/en/software. It is the main program what you will use to manage this script and connection to ESP.
-  3. Install board manager by following guide in wiki: https://wiki.dfrobot.com/SKU_DFR0868_Beetle_ESP32_C3 .
-  4. Install proper Arduino library versions mentioned below.
-  5. Set up proper pins and presets from script.
-  6. Set up board manager presets from toolbars "Tools" dropdown and connect board.
-  7. Upload script without battery or weapon being attached.
-  8. Install controller from: https://github.com/RebuildRobotics/
-  9. Connect and have fun.
+  1. Installing Arduino IDE, Board manager and libraries:
+    1.1. Install Arduino IDE from https://www.arduino.cc/en/software. It is the main program what you will use to manage this script and connection to ESP.
+    1.2. Install board manager by following guide in wiki: https://wiki.dfrobot.com/SKU_DFR0868_Beetle_ESP32_C3 .
+    1.3. Install proper Arduino library versions mentioned below.
+  2. Installing script:
+    2.1. Download script from Githubs button: "Code" > Download Zip and unzip it.
+    2.2. Set up pins and presets from script.
+    2.3. Set up board manager presets as mentioned below.
+    2.4. Upload script as mentioned below.
+  3. Controller:
+    3.1. Install controller from: https://github.com/RebuildRobotics/
+    3.2. Connect and have fun.
       
   *****
   ARDUINO IDE BOARD MANAGER & LIBRARIES:
@@ -84,11 +87,12 @@ String version = "1.4";
   *****
   UPLOADING AND SERIAL MONITORING:
   *****
-  Presets needed in Arduino IDE for serial monitoring and uploading script:
-  - Tools > Board: > esp32 > DFRobot Beetle ESP32-C3
-  - Tools > USB CDC On Boot > Enabled
-  - Tools > Upload Speed > 115200
-  - Tools > Erase All Flash Before Sketch Upload > Enabled = Erases all bot presets from Eeprom / Disabled = Keeps bot presets in memory.
+  - Do not connect ESP into USB cable when battery is connected!
+  - Presets needed in Arduino IDE for serial monitoring and uploading script:
+    - Tools > Board: > esp32 > DFRobot Beetle ESP32-C3
+    - Tools > USB CDC On Boot > Enabled
+    - Tools > Upload Speed > 115200
+    - Tools > Erase All Flash Before Sketch Upload > Enabled = Erases all bot presets from Eeprom / Disabled = Keeps bot presets in memory.
       
   When updating new version of script flash should always be erased!
 
