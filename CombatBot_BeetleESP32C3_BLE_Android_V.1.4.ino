@@ -380,7 +380,7 @@ void checkPresetErrors() {
   if (TRIM_L < 0 || TRIM_L > 100 || TRIM_R < 0 || TRIM_R > 100) errors += "Warning: Trim level out of range!\n";
 }
 
-void indicateError() {
+void indicateError(){
   (blinkInterval > 0) ? blinkLed() : setLed(255, 100);
 }
 
@@ -469,10 +469,10 @@ class MyCallbacks : public BLECharacteristicCallbacks {
           int srvAng;
           if (USE_BIDIR) {
             srvAng = map(ch3, -100, 100, SRV_ANG_MIN, SRV_ANG_MAX);
-            srvAng = constrain(srvAng, SRV_ANG_MIN, SRV_ANG_MAX);
+            srvAng = constrain(srvAng, (SRV_ANG_MIN < SRV_ANG_MAX) ? SRV_ANG_MIN : SRV_ANG_MAX, (SRV_ANG_MIN < SRV_ANG_MAX) ? SRV_ANG_MAX : SRV_ANG_MIN);
           } else {
             srvAng = map(ch3, 0, 100, SRV_ANG_IDLE, SRV_ANG_MAX);
-            srvAng = constrain(srvAng, SRV_ANG_IDLE, SRV_ANG_MAX);
+            srvAng = constrain(srvAng, (SRV_ANG_IDLE < SRV_ANG_MAX) ? SRV_ANG_IDLE : SRV_ANG_MAX, (SRV_ANG_IDLE < SRV_ANG_MAX) ? SRV_ANG_MAX : SRV_ANG_IDLE);
           }
           // Set angle
           setWeaponAngle(srvAng);
