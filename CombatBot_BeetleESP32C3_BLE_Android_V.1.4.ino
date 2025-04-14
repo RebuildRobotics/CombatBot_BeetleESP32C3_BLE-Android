@@ -118,7 +118,7 @@ String version = "1.4";
   - Can handle incoming bluetooth messages in 20ms intervals.
   - String format ch1:ch2:ch3:ch4\n .
   - ch1 = fwd/bwd speed, ch2 = left/right speed, ch3 = servo angle or weapon speed, ch4 = AI on/off.
-  - ch1 and ch2 values are in scale of -100~100, ch3 and ch4 0~100. 0 is stop. Signals are converted to PWM value scale 0~255. Negative numbers are absoluted.
+  - ch1 and ch2 values are in scale of -100 to 100, ch3 and ch4 0 to 100. 0 is stop. Signals are converted to PWM value scale 0 to 255. Negative numbers are absoluted.
 
   *****
   CONTROLLER:
