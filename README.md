@@ -1,5 +1,5 @@
 ****************************************
-# CombatBot_BeetleESP32C3_BLE-Android
+# CombatBot_BeetleESP32C3_BLE-Android V.1.4.1
 ****************************************
 
   Free script designed to provide the platform for hobbyists and educational use as a starting point for
@@ -18,9 +18,8 @@
   - Supports DC motors using HR8833 or TB6612FNG DC motor driver or Brushless motors using ESC's for driving.
   - Support for single servo or brushless motor controlled by ESC as weapon motor.
   - 1-2S LiPo battery voltage monitoring.
-  - Low voltage guard (Protects battery by activating failsafe when battery is running low while keeping controller connected to bot. Failsafe will be deactivated when voltage becomes higher than shutdown level).
-    (If facing problems with voltage drops and guard is stopping motors with close to charged battery try to use quality connectors like BT2.0 or XT-30 not JST's, proper cable sizes and possible capacitor near weapons power drain.)
-  - Failsafe (Stops all functions when disconnected from controller. Same function is used with low voltage guard).
+  - Low voltage guard.
+  - Failsafe & ouf of range protection.
   - Customizable AI slot (ch4, void runAI).
   - Buildin automatic support in Custom AI slot for flippers using DFRobot VL6180X ToF Distance Ranging Sensor.
   - Weapon/servo presets, drive motor directions and trim levels can be set from script presets.
@@ -119,6 +118,22 @@
   - ch1 and ch2 values are in scale of -100 to 100, ch3 and ch4 0 to 100. 0 is stop. Signals are converted to PWM value scale 0 to 255. Negative numbers are absoluted.
 
   *****
+  FAILSAFE & OUT OF RANGE:
+  *****
+  - Script includes failsafe and out of range functions to prevent up accidents and bot running away.
+  - Functions stops bot from using AI, weapon and motors when controllers signal is lost or bot is out of range.
+  - Using failsafe is highly recommended in robotics and it's required in combat robotics. Same kind of functions are used in normal RC transmitters.
+  - Failsafe is deactivated when controller is connected into bot, so if you go out of range you have to reconnect into bot for to controlling it.
+  - Remember to set pins correctly, if they are not set right script and failsafe won't work properly!
+
+  *****
+  LOW VOLTAGE GUARD:
+  *****
+ - Protects battery by activating failsafe when battery is running low while keeping controller connected to bot.
+ - Failsafe will be deactivated when voltage becomes higher than shutdown level.
+ - If facing problems with voltage drops and guard is stopping motors with close to charged battery try to use quality connectors like BT2.0 or XT-30 (not JST), proper cable sizes and possible capacitor near weapons power drain.
+    
+  *****
   CONTROLLER:
   *****
   - Android: Rebuild Robotics - Bot Controller (Download from: https://github.com/RebuildRobotics).
@@ -131,9 +146,6 @@
   SAFETY NOTICE:
   *****
   - Combat robotics is fun and extremely educating but dangerous hobby, always think safety first!
-  - Script includes failsafe function to prevent up accidents. Function shuts down drive- and weapon motors when controllers signal is lost.
-    This is same kind of option than good RC receivers have and it's required in combat robotics.
-  - Remember to set pins correctly, if they are not set right script and failsafe won't work properly!
   - Do not keep battery connected at the same time when USB is connected into powersource!
   - Accidentally motor spins will happen when ESP is powered, script is uploading or wrong board or library version is installed!
     Motor spins at startup can be prevented by using pull-up/pull down resistors or our designed ESP32-C3 CombatBot Expansion Board and tested IDE library versions.
@@ -143,4 +155,4 @@
     It might cause serious injuries because board functionalities are changing. Future updates to this script includes fresher and tested information from later versions.
   - Remember always check that you have correct versions installed before updating script into board.
   - Modify script only if you know what you are doing!
-  - Script has been tested only in close range at Combat arenas. When driving outside use precaution.
+  - Script has been tested only in close range at Combat arenas and inside. When driving outside use precaution.
