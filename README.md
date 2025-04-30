@@ -61,6 +61,7 @@
   HOW TO INSTALL:
   *****
   1. Installing Arduino IDE, Board manager and libraries:
+    1.1. keke
       1.1. Install Arduino IDE from https://www.arduino.cc/en/software. It is the main program what you will use to manage this script and connection to ESP.
       1.2. Install board manager by following guide in wiki: https://wiki.dfrobot.com/SKU_DFR0868_Beetle_ESP32_C3 .
       1.3. Install proper Arduino library versions mentioned below.
