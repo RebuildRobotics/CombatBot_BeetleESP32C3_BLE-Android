@@ -62,15 +62,14 @@
   *****
   1. Installing Arduino IDE, Board manager and libraries:
     1.1. Install Arduino IDE from https://www.arduino.cc/en/software. It is the main program what you will use to manage this script and connection to ESP.
-     1.1. Install Arduino IDE from https://www.arduino.cc/en/software. It is the main program what you will use to manage this script and connection to ESP.
-     1.2. Install board manager by following guide in wiki: https://wiki.dfrobot.com/SKU_DFR0868_Beetle_ESP32_C3 .
-     1.3. Install proper Arduino library versions mentioned below.
-  3. Installing script:
+    1.2. Install board manager by following guide in wiki: https://wiki.dfrobot.com/SKU_DFR0868_Beetle_ESP32_C3 .
+    1.3. Install proper Arduino library versions mentioned below.
+  2. Installing script:
     2.1. Download script from Githubs button: "Code" > Download Zip and unzip it.
     2.2. Set up pins and presets from script.
     2.3. Set up board manager presets as mentioned below.
     2.4. Upload script as mentioned below.
-  4. Controller:
+  3. Controller:
     3.1. Install controller from: https://github.com/RebuildRobotics/
     3.2. Connect and have fun.
       
