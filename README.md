@@ -77,7 +77,7 @@
   ARDUINO IDE BOARD MANAGER & LIBRARIES:
   *****
   Tested stable versions:
-  - Board:                    esp32 by Espressif Systems v.3.1.0  Install from Arduino IDE      (Uses ESP32 core 3.x)
+  - Board:                    esp32 by Espressif Systems v.3.2.0  Install from Arduino IDE      (Uses ESP32 core 3.x)
   - Servo/Weapon control:     ESP32Servo v.3.0.6                  Install from Arduino IDE
   - Distance sensor:          DFRobot_VL6180X v.1.0.1             Install from Arduino IDE
   
@@ -96,7 +96,7 @@
   *****
   PRESETS:
   *****
-  - Basic presets can be changed from controller or from script below.
+  - Basic presets can be changed from controller or from script.
   - Presets will be saved into Eeprom when updated from controller.
   - Presets saved in Eeprom will be erased in upload if "Tools > Erase All Flash Before Sketch Upload" is enabled.
   
