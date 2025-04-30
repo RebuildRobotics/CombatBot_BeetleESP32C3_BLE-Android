@@ -65,13 +65,13 @@
       2. Install board manager by following guide in wiki: https://wiki.dfrobot.com/SKU_DFR0868_Beetle_ESP32_C3 .
       3. Install proper Arduino library versions mentioned below.
   2. Installing script:
-    2.1. Download script from Githubs button: "Code" > Download Zip and unzip it.
-    2.2. Set up pins and presets from script.
-    2.3. Set up board manager presets as mentioned below.
-    2.4. Upload script as mentioned below.
+      1. Download script from Githubs button: "Code" > Download Zip and unzip it.
+      2. Set up pins and presets from script.
+      3. Set up board manager presets as mentioned below.
+      4. Upload script as mentioned below.
   3. Controller:
-    3.1. Install controller from: https://github.com/RebuildRobotics/
-    3.2. Connect and have fun.
+      1. Install controller from: https://github.com/RebuildRobotics/
+      2. Connect and have fun.
       
   *****
   ARDUINO IDE BOARD MANAGER & LIBRARIES:
