@@ -79,7 +79,7 @@ String version = "1.4.1";
   ARDUINO IDE BOARD MANAGER & LIBRARIES:
   *****
   Tested stable versions:
-  - Board:                    esp32 by Espressif Systems v.3.1.0  Install from Arduino IDE      (Uses ESP32 core 3.x)
+  - Board:                    esp32 by Espressif Systems v.3.2.0  Install from Arduino IDE      (Uses ESP32 core 3.x)
   - Servo/Weapon control:     ESP32Servo v.3.0.6                  Install from Arduino IDE
   - Distance sensor:          DFRobot_VL6180X v.1.0.1             Install from Arduino IDE
   
@@ -217,7 +217,7 @@ bool USE_BIDIR = false;                       // Use BiDirectional servo/weapon 
 bool USE_ESC = false;                         // Is script using ESC or servo // true = For spinners, signal is sent continuously to ESC. false = For flippers and grabbers, signal is sent to servo only when value has been changed.
 // Servo angles / Brushless ESC speed controlled by Servo library (0-180° // 90° = 50%, 180° = 100% etc.) // Weapon(normal mode): 0° = Stop, 1-180° = run // Servo/Weapon(BiDir): 0° = Left, 180° = Right, 90° = Middle.
 byte SRV_ANG_IDLE = 0;                        // Idle angle // Has to be 0 when using ESC and NOT using BiDirectional signal!
-byte SRV_ANG_MAX = 90;                        // Max angle  // Has to be bigger than 0 when using ESC and NOT using BiDirectional signal!
+byte SRV_ANG_MAX = 180;                       // Max angle  // Has to be bigger than 0 when using ESC and NOT using BiDirectional signal!
 byte SRV_ANG_MIN = 0;                         // Min angle  // Used only in BiDirectional mode
 // --------------------- Telemetry ---------------------
 #define useTelemetry                true      // Use battery voltage monitoring // Set false if voltage divider is not attached, otherwise bot is sending random values to controller and it will launch low battery alarm
@@ -238,7 +238,7 @@ byte SRV_ANG_MIN = 0;                         // Min angle  // Used only in BiDi
 #define MIN_MICROS_MD               500       // min. 500us
 #define MAX_MICROS_MD               2500      // max. 2500us
 #endif
-// Servo (Values tested with Corona CS-939MG)
+// Servo // Corona CS-939MG 600/2300us, BristolBotBuilders 2S HV High Speed Metal Geared Antweight Servo 500/2500us.
 #define MIN_MICROS_SERVO            600       // min. 500us
 #define MAX_MICROS_SERVO            2300      // max. 2500us
 // Brushless ESC (Default BLHeli S Littlebee 20A values)
@@ -312,8 +312,10 @@ Servo motorLeft;
 Servo motorRight;
 #endif
 // Distance sensor
+#if defined(useSensor)
 #include <DFRobot_VL6180X.h>
 DFRobot_VL6180X VL6180X;
+#endif
 // ---------------------- Values -----------------------
 // OnBoard LED
 byte ledDuty;
@@ -357,7 +359,8 @@ void setLed(int d, int b)
   ledDuty = d;
   blinkInterval = b;
   ledcWriteChannel(CH_PWM_LED, ledDuty);
-  if (blinkInterval > 0) ledBlinked = millis();
+  if (blinkInterval > 0)
+    ledBlinked = millis();
 }
 
 void blinkLed()
@@ -383,21 +386,27 @@ String errors;
 void checkPresetErrors()
 {
   // Name too long
-  if (NAME.length() > 19) errors += "Warning: Name too long! Max. 19 characters\n";
+  if (NAME.length() > 19)
+    errors += "Warning: Name too long! Max. 19 characters\n";
   // Invalid motor driver type
   #if !defined(HR8833) && !defined(TB6612) && !defined(BRUSHL)
     errors += "Warning: Incorrect motor driver type!\n";
   #endif
   // Wrong cell count
-  if (useTelemetry && cells == 0) errors += "Warning: Battery voltage not recognized!\n";
+  if (useTelemetry && cells == 0)
+    errors += "Warning: Battery voltage not recognized!\n";
   // Low voltage guard - telemetry disabled
-  if (!useTelemetry && useLowVoltageGuard) errors += "Warning: Telemetry has to be enabled when using Low voltage guard!\n";
+  if (!useTelemetry && useLowVoltageGuard)
+    errors += "Warning: Telemetry has to be enabled when using Low voltage guard!\n";
   // Wrong weapon parameter
-  if ((USE_ESC && !USE_BIDIR && SRV_ANG_IDLE != 0) || (USE_ESC && USE_BIDIR && (SRV_ANG_IDLE == 0 || SRV_ANG_IDLE == 180))) errors += "Warning: Incorrect weapon idle angle!\n";
+  if ((USE_ESC && !USE_BIDIR && SRV_ANG_IDLE != 0) || (USE_ESC && USE_BIDIR && (SRV_ANG_IDLE == 0 || SRV_ANG_IDLE == 180)))
+    errors += "Warning: Incorrect weapon idle angle!\n";
   // Servo value out of range
-  if (SRV_ANG_MIN < 0 || SRV_ANG_MIN > 180 || SRV_ANG_IDLE < 0 || SRV_ANG_IDLE > 180 || SRV_ANG_MAX < 0 || SRV_ANG_MAX > 180) errors += "Warning: Servo value out of range!\n";
+  if (SRV_ANG_MIN < 0 || SRV_ANG_MIN > 180 || SRV_ANG_IDLE < 0 || SRV_ANG_IDLE > 180 || SRV_ANG_MAX < 0 || SRV_ANG_MAX > 180)
+    errors += "Warning: Servo value out of range!\n";
   // Trim out of range
-  if (TRIM_L < 0 || TRIM_L > 100 || TRIM_R < 0 || TRIM_R > 100) errors += "Warning: Trim level out of range!\n";
+  if (TRIM_L < 0 || TRIM_L > 100 || TRIM_R < 0 || TRIM_R > 100)
+    errors += "Warning: Trim level out of range!\n";
 }
 
 void indicateError()
@@ -411,20 +420,24 @@ class MyServerCallbacks : public BLEServerCallbacks
 {
   void onConnect(BLEServer *pServer)
   {
-    if (DEBUG) Serial.println("Bluetooth connected");
+    if (DEBUG)
+      Serial.println("Bluetooth connected");
     deviceConnected = true;
     setLed(50, 0);
     failsafe(false);
-    if (DEBUG) printBotData();
+    if (DEBUG)
+      printBotData();
   };
 
   void onDisconnect(BLEServer *pServer)
   {
-    if (DEBUG) Serial.println("Bluetooth disconnected");
+    if (DEBUG)
+      Serial.println("Bluetooth disconnected");
     deviceConnected = false;
     setLed(50, 1000);
     failsafe(true);
-    if (DEBUG) printBotData();
+    if (DEBUG)
+      printBotData();
     delay(500);
     pServer->startAdvertising();
   }
@@ -518,8 +531,10 @@ class MyCallbacks : public BLECharacteristicCallbacks
         // AI
         if (ch4 != ch4Prev)
         {
-          if (ch4 == 0) setAI(false);   // AI Off
-          if (ch4 == 100) setAI(true);  // AI On
+          if (ch4 == 0)
+            setAI(false);   // AI Off
+          if (ch4 == 100)
+            setAI(true);  // AI On
         }
         // Data updated
         lastUpdate = millis();
@@ -558,7 +573,8 @@ class MyCallbacks : public BLECharacteristicCallbacks
           }
           else if (presetID == "S_ID")
           {
-            if (!USE_ESC || (USE_ESC && !USE_BIDIR && presetValue == 0) || (USE_ESC && USE_BIDIR)) SRV_ANG_IDLE = constrain(presetValue, 0, 180);
+            if (!USE_ESC || (USE_ESC && !USE_BIDIR && presetValue == 0) || (USE_ESC && USE_BIDIR))
+              SRV_ANG_IDLE = constrain(presetValue, 0, 180);
             varsCount++;
           }
           else if (presetID == "S_MA")
@@ -610,7 +626,8 @@ class MyCallbacks : public BLECharacteristicCallbacks
         }
       }
       // Print debug data
-      if (DEBUG) printBotData();
+      if (DEBUG)
+        printBotData();
     }
   }
 };
@@ -652,8 +669,10 @@ void setup()
     analogReadResolution(12);
     // Init LiPo cell count from battery voltage (Using voltage divider)
     int mA = analogReadMilliVolts(PIN_VDIV);
-    if (mA >= 1000 && mA < 1550) cells = 1; // 2,8 - 4,3 V
-    else if (mA >= 2150 && mA <= 3100) cells = 2; // 6,0 - 8,65V
+    if (mA >= 1000 && mA < 1550) // 2,8 - 4,3 V
+      cells = 1;
+    else if (mA >= 2150 && mA <= 3100) // 6,0 - 8,65V
+      cells = 2;
   }
   // Start debug mode
   if (DEBUG)
@@ -669,7 +688,8 @@ void setup()
   // Init distance sensor
   if (useSensor && !(VL6180X.begin()))
   {
-    if (DEBUG) errors += "Warning: Distance sensor not found!\n";
+    if (DEBUG)
+      errors += "Warning: Distance sensor not found!\n";
   }
   // Print data
   if (DEBUG)
@@ -685,20 +705,25 @@ void setup()
     }
   }
   // Indicate parameter errors
-  while (errors != "") indicateError();  // Blink led and do not continue if errors found
+  while (errors != "")
+    indicateError();  // Blink led and do not continue if errors found
   // Add debug footer text
-  if (DEBUG) Serial.println("---------- [Setup complete] ----------");
+  if (DEBUG)
+    Serial.println("---------- [Setup complete] ----------");
   // Set led indication to standby
   setLed(50, 1000);
 }
 // ---------------------- Main loop --------------------
 void loop() {
   // Onboard led blink
-  if (blinkInterval > 0) blinkLed();
+  if (blinkInterval > 0)
+    blinkLed();
   // Voltage monitoring
-  if (useTelemetry && millis() - voltageMonitored >= monitorVoltageInterval) monitorVoltage();
+  if (useTelemetry && millis() - voltageMonitored >= monitorVoltageInterval)
+    monitorVoltage();
   // Run AI
-  if (deviceConnected && AIActive && !batteryEmpty) runAI();
+  if (deviceConnected && AIActive && !batteryEmpty)
+    runAI();
   // Check has controller data been received and stop after 1 sec if not // Returns boolean if needed
   isDataUpdated();
   // Slow down loop, otherwise isDataUpdated() check will fail
@@ -732,7 +757,8 @@ void BLEBegin()
   pAdvertising->addServiceUUID(SERVICE_UUID);
   pAdvertising->setScanResponse(true);
   BLEDevice::startAdvertising();
-  if (DEBUG) Serial.println("Waiting client ...");
+  if (DEBUG)
+    Serial.println("Waiting client ...");
 }
 
 void EEPROM_Save()
@@ -769,8 +795,10 @@ void EEPROM_Load()
 
 bool EEPROM_Exists()
 {
-  if (EEPROM.read(0) == 1) return true;
-  else return false;
+  if (EEPROM.read(0) == 1)
+    return true;
+  else
+    return false;
 }
 
 void EEPROM_writeString(int addr, const String &str) // Based on example: https://stackoverflow.com/questions/70531251/error-while-writing-retrieving-string-in-eeprom
@@ -837,13 +865,11 @@ void drive(int spdL, int spdR)
     // Left motor direction
     if (spdL > 0) // Forward
     {
-      if (INV_MOT_L) digitalWrite(PIN_MD_IA2, 1);
-      else digitalWrite(PIN_MD_IA2, 0);
+      (INV_MOT_L) ? digitalWrite(PIN_MD_IA2, 1) : digitalWrite(PIN_MD_IA2, 0);
     }
     else if (spdL < 0) // Backward
     {
-      if (INV_MOT_L) digitalWrite(PIN_MD_IA2, 0);
-      else digitalWrite(PIN_MD_IA2, 1);
+      (INV_MOT_L) ? digitalWrite(PIN_MD_IA2, 0) : digitalWrite(PIN_MD_IA2, 1);
     }
     else // Brake
     {
@@ -852,13 +878,11 @@ void drive(int spdL, int spdR)
     // Right motor direction
     if (spdR > 0) // Forward
     {
-      if (INV_MOT_R) digitalWrite(PIN_MD_IB2, 1);
-      else digitalWrite(PIN_MD_IB2, 0);
+      (INV_MOT_R) ? digitalWrite(PIN_MD_IB2, 1) : digitalWrite(PIN_MD_IB2, 0);
     }
     else if (spdR < 0) // Backward
     {
-      if (INV_MOT_R) digitalWrite(PIN_MD_IB2, 0);
-      else digitalWrite(PIN_MD_IB2, 1);
+      (INV_MOT_R) ? digitalWrite(PIN_MD_IB2, 0) : digitalWrite(PIN_MD_IB2, 1);
     }
     else // Brake
     {
@@ -1064,7 +1088,8 @@ void failsafe(bool active)
   if (active) // Enable, stops all
   {
     stopMotors();
-    if (USE_ESC) setWeaponAngle(SRV_ANG_IDLE);
+    if (USE_ESC)
+      setWeaponAngle(SRV_ANG_IDLE);
     setAI(false);
     disableOutputs();
     resetChannels();
@@ -1081,9 +1106,12 @@ void monitorVoltage()
 {
   // Turn battery voltage into percents // Using voltage divider in PIN 0 with 100kOhm resistor in POS and 56kOhm in GND
   voltageLevel = analogReadMilliVolts(PIN_VDIV);  // https://docs.espressif.com/projects/arduino-esp32/en/latest/api/adc.html
-  if (cells == 1) voltageLevel = map(voltageLevel, 1150, 1500, 0, 100);
-  else if (cells == 2) voltageLevel = map(voltageLevel, 2350, 3000, 0, 100);
-  else voltageLevel = 0;
+  if (cells == 1)
+    voltageLevel = map(voltageLevel, 1150, 1500, 0, 100);
+  else if (cells == 2)
+    voltageLevel = map(voltageLevel, 2350, 3000, 0, 100);
+  else
+    voltageLevel = 0;
   voltageLevel = constrain(voltageLevel, 0, 100);
   if (deviceConnected)
   {
@@ -1130,9 +1158,12 @@ void runAI()
     if (millis() - angleSetTime >= sensorScanFreq) // Trigger after delay
     {
       range = VL6180X.rangePollMeasurement();
-      if (range > 0 && range < 255 && range <= triggerRange && !weaponActive) setWeaponAngle(SRV_ANG_MAX); // Set weapon to max angle
-      else if ((range == 0 || range >= 255 || range > triggerRange) && weaponActive) setWeaponAngle(SRV_ANG_IDLE); // Return to idle position
-      else angleSetTime = millis();
+      if (range > 0 && range < 255 && range <= triggerRange && !weaponActive) // Set weapon to max angle
+        setWeaponAngle(SRV_ANG_MAX);
+      else if ((range == 0 || range >= 255 || range > triggerRange) && weaponActive) // Return to idle position
+        setWeaponAngle(SRV_ANG_IDLE);
+      else
+        angleSetTime = millis();
     }
     if (DEBUG) // Print errors
     {
