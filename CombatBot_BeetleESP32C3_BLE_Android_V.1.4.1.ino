@@ -54,9 +54,9 @@ String version = "1.4.1";
   *****
   - Driving:
     - DC motors:          2 x PWM + 2 digital outputs
-    - Brushless motors:   2 x PPM outputs
-  - Weapon ESC or servo:  1 x PPM output
-  - PPM signals are generated with servo library.
+    - Brushless motors:   2 x PWM outputs
+  - Weapon ESC or servo:  1 x PWM output
+  - Weapon PWM signals are generated with servo library.
   - If using brushless ESC's they has to be configured separately!
   
   *****
@@ -231,7 +231,7 @@ byte SRV_ANG_MIN = 0;                         // Min angle  // Used only in BiDi
 #define triggerRange                20        // Distance sensors trigger range in millimeters
 #define sensorScanFreq              20        // Sensor scan and weapon angle change interval in ms
 /******************************************************/
-/* ----------------- PPM PARAMETERS ----------------- */
+/* ----------------- PWM PARAMETERS ----------------- */
 /******************************************************/
 // Motordrivers
 #if defined(BRUSHL)
@@ -499,7 +499,7 @@ class MyCallbacks : public BLECharacteristicCallbacks
           throttleLeft = constrain(throttleLeft, -255, 255);
           throttleRight = constrain(throttleRight, -255, 255);
         #endif
-        // Convert to PPM & invert rotation
+        // Convert to Angle & invert rotation
         #if defined(BRUSHL)
           throttleLeft = (INV_MOT_L) ? map(throttleLeft, -100, 100, 180, 0) : map(throttleLeft, -100, 100, 0, 180);
           throttleRight = (INV_MOT_R) ? map(throttleRight, -100, 100, 0, 180) : map(throttleRight, -100, 100, 180, 0);
