@@ -1,5 +1,5 @@
 ****************************************
-# CombatBot_BeetleESP32C3_BLE-Android V.1.4.2
+# CombatBot_BeetleESP32C3_BLE-Android
 ****************************************
 
   Free script designed to provide the platform for hobbyists and educational use as a starting point for
