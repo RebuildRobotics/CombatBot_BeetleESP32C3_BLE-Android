@@ -162,8 +162,8 @@ String version = "1.4.2";
   *****
   SUPPORTING PROJECTS:
   *****
-  You can sponsor this and other projects without this couldn't been done from links below.
-  - Coming some day..
+  We do not search any financial benefit from scripts and apps made, we just want to offer platforms to help you to get started with robotics and learn how things are made.
+  You are free to support other projects which are used in our programs and have.
   
   *****
   SOURCES:
@@ -188,7 +188,7 @@ String version = "1.4.2";
   Third party copyrights:
   ESP32Servo Copyright (C) 2017 John K. Bennett
 
-  Bug reports through https://github.com/RebuildRobotics /program/Issues. Other contacts related this program: support@rebuildrobotics.fi.
+    Bug reports through https://github.com/RebuildRobotics /program/Issues. Other contacts related this program: support@rebuildrobotics.fi.
 */
 // -------------------- Verify board -------------------
 #if !defined(ARDUINO_ESP32C3_DEV)
