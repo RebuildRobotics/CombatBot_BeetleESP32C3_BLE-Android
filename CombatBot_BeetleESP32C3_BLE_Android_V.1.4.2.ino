@@ -182,13 +182,17 @@ String version = "1.4.2";
   Script builders and component manufacturers are not responsiple from possible damages.
   Third party script writers hasn't got nothing to do with this project except I'm using their libraries.
 
-  Copyright (C) Ville Ollila (RoboticsIsForNerds, Rebuild Robotics). Licensed under MIT license.
+  Copyright (C) Ville Ollila (RoboticsIsForNerds, Rebuild Robotics).
+  
+  This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
+  To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
+  
   Examples used are linked in functions.
 
   Third party copyrights:
   ESP32Servo Copyright (C) 2017 John K. Bennett
 
-    Bug reports through https://github.com/RebuildRobotics /program/Issues. Other contacts related this program: support@rebuildrobotics.fi.
+  Bug reports through https://github.com/RebuildRobotics /program/Issues. Other contacts related this program: support@rebuildrobotics.fi.
 */
 // -------------------- Verify board -------------------
 #if !defined(ARDUINO_ESP32C3_DEV)
