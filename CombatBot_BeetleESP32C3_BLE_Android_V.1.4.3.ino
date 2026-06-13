@@ -125,8 +125,21 @@ String version = "1.4.3";
   - Script includes failsafe and out of range functions to prevent up accidents and bot running away.
   - Functions stops bot from using AI, weapon and motors when controllers signal is lost or bot is out of range.
   - Using failsafe is highly recommended in robotics and it's required in combat robotics. Same kind of functions are used in normal RC transmitters.
-  - Failsafe is deactivated when controller is connected into bot, so if you go out of range you have to reconnect into bot for to controlling it.
-  - Remember to set pins correctly, if they are not set right script and failsafe won't work properly!
+  - Remember to check that pins are set correctly, if they are not set right script and failsafe won't work properly!
+  - If failsafe activates you have to reconnect into bot to continue controlling it.
+
+  Generally there are two different failsafes:
+
+  Main one activates from controllerConnected and controllerDisconnected events.
+	- Works with all channels (Driving, weapon, AI).
+	- Littlebit slow because of bluetoothStack, but works well.
+
+  Second one activates when packets haven't been received from controller.
+	- Works with all channels if using Android controller and bot script made by us. This is because all Android controllers buttons are sending continuous signal which can be monitored.
+	- Works only with driving channel using stick. This is because it's sending continuous signal.
+	- Doesn't work with weapon and AI channels with gamepads. This is because channels are changing bots on/off state and buttons can't send continuous signal, which needs to be monitored.
+	- Faster detect than main failsafe.
+	- More reliable when bot is running out of range.
 
   *****
   LOW VOLTAGE GUARD:
@@ -192,7 +205,7 @@ String version = "1.4.3";
   Third party copyrights:
   ESP32Servo Copyright (C) 2017 John K. Bennett
 
-  Bug reports through https://github.com/RebuildRobotics /program/Issues. Other contacts related this program: support@rebuildrobotics.fi.
+  Bug reports through https://github.com/RebuildRobotics /program/Issues. Other contacts related this program: contact@rebuildrobotics.fi.
 */
 // -------------------- Verify board -------------------
 #if !defined(ARDUINO_ESP32C3_DEV)
